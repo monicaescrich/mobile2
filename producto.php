@@ -2,6 +2,10 @@
 if(isset($_GET["idproducto"]))
 {
     $idprod=$_GET["idproducto"];
+    session_start();
+    $_SESSION["idprod"]=$idprod;
+    
+
 }
 ?>
 
@@ -37,22 +41,20 @@ if(isset($_GET["idproducto"]))
   </a>
   <a class="tab-item" href="#">
     <span class="icon icon-check"></span>
-    <span class="tab-label">Carrito</span>
+    <span class="tab-label">Carrito <span class="badge badge-negative" id='contadorproductos'>0</span></span>
   </a>
-  <a class="tab-item" href="#">
+  <a class="tab-item" href="historicos.php">
     <span class="icon icon-refresh"></span>
     <span class="tab-label">Historicos</span>
   </a>
-  <a class="tab-item" href="#">
-    <span class="icon icon-search"></span>
-    <span class="tab-label">Buscar</span>
-  </a>
-  <a class="tab-item" href="#">
+  
+  <a class="tab-item" href="contactanos.php">
     <span class="icon icon-info"></span>
     <span class="tab-label">Contactanos</span>
   </a>
 </nav>
 <script type="text/javascript">
+    var idcliente='1';
     $(document).ready(function(){
                 mostrar_producto();
             });
@@ -60,7 +62,7 @@ if(isset($_GET["idproducto"]))
       {
         $("#areaproductos").html("");
         //OBTENIENDO INFORMACION DE WS
-        $.get("http://pymesv.com/cliente02w/API/producto/", { idproducto: <?php echo $idprod; ?> })
+        $.get("http://pymesv.com/cliente02w/API/producto/", { idproducto: <?php echo $_SESSION["idprod"]; ?> })
         .done(function(jsonws){                   
           $.each(jsonws ,function(indice,valor){
             if(indice=="error" && valor=="0")
@@ -73,7 +75,7 @@ if(isset($_GET["idproducto"]))
             }
             else
             { 
-            var html ="<form><center><img  style='width:50%; height=50%;'src='"+valor.url+"'></center><p><center>"+valor.descripcion+"</center></p><input type='text' placeholder='cantidad'><button class='btn btn-positive btn-block'>Agregar a carrito!</button></form>";
+            var html ="<form><center><img  style='width:50%; height=50%;'src='"+valor.url+"'><h2>"+valor.nombre+"</h2></center><h3><center>"+valor.precio+"</center></h3><p><center>"+valor.descripcion+"</center></p><input type='text' placeholder='cantidad'><button class='btn btn-positive btn-block' onClick='agregar_carrito(idcliente,'"+valor.idproductos+"','"+valor.nombre+"','"+valor.precio+"','"+valor.url+"');'>Agregar a carrito!</button></form>";
                $("#areaproducto").append(html);
               
             }
@@ -81,6 +83,19 @@ if(isset($_GET["idproducto"]))
          
         });
       }
+      //AGREGAR PARCIALMENTE A CARRO DE COMPRAS
+      var carrito=[];
+            var cantidad;
+            //AGREGAR PARCIALMENTE AL CARRITO
+            function agregar_carrito(cliente,idproducto,nombre,precio,imagen)
+            {               
+                var nuevo;
+                nuevo={"idcliente":cliente,"idproductos":idproducto,"nombre":nombre,"precio":precio,"url":imagen};
+                carrito.push(nuevo);
+                cantidad=carrito.length;
+                $("#contadorproductos").html(cantidad).fadeIn();
+                
+            }
 </script>
   </body>
   </html>
