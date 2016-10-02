@@ -1,3 +1,10 @@
+<?php
+if(isset($_GET["idproducto"]))
+{
+    $idprod=$_GET["idproducto"];
+}
+?>
+
 <html>
   <head>
     <meta charset="utf-8">
@@ -19,9 +26,9 @@
   </head>
 
   <body>
-<ul class="table-view" id="areaproductos">
-  
-</ul>
+    <div style="padding:10px;" id="areaproducto">
+    
+    </div>
 
   <nav class="bar bar-tab">
   <a class="tab-item active" href="principal.php">
@@ -45,18 +52,15 @@
     <span class="tab-label">Contactanos</span>
   </a>
 </nav>
-
 <script type="text/javascript">
- 
-      $(document).ready(function(){
-        obtener_productos();
-      });
-      //OBTENER PRODUCTOS POR WS
-      function obtener_productos()
+    $(document).ready(function(){
+                mostrar_producto();
+            });
+    function mostrar_producto()
       {
         $("#areaproductos").html("");
         //OBTENIENDO INFORMACION DE WS
-        $.get("http://pymesv.com/cliente02w/API/TODOS/")
+        $.get("http://pymesv.com/cliente02w/API/producto/", { idproducto: <?php echo $idprod; ?> })
         .done(function(jsonws){                   
           $.each(jsonws ,function(indice,valor){
             if(indice=="error" && valor=="0")
@@ -69,8 +73,8 @@
             }
             else
             { 
-            var html ="<li class='table-view-cell media'><a href='producto.php?idproducto="+valor.idproductos+"'class='navigate-right'><img class='media-object pull-left' src='"+valor.url+"' width='40px' height='40px' ><div class='media-body'>"+valor.nombre+"<p>"+valor.descripcion+"</p></div></a></li>";
-               $("#areaproductos").append(html);
+            var html ="<form><center><img  style='width:50%; height=50%;'src='"+valor.url+"'></center><p><center>"+valor.descripcion+"</center></p><input type='text' placeholder='cantidad'><button class='btn btn-positive btn-block'>Agregar a carrito!</button></form>";
+               $("#areaproducto").append(html);
               
             }
           })
