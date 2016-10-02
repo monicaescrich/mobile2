@@ -1,10 +1,4 @@
-<?php 
-if (isset($_GET["idcliente"])) {
-  session_start();
-  $_SESSION["idcliente"]=$_GET["idcliente"];
-  $idcliente=$_SESSION["idcliente"];
-}
-?>
+
 <html>
   <head>
     <meta charset="utf-8">
@@ -26,7 +20,9 @@ if (isset($_GET["idcliente"])) {
   </head>
 
   <body>
+  	<center><h4 style="padding:10px;">Comprados recientemente</h4></center>
 <ul class="table-view" id="areaproductos">
+
   
 </ul>
 
@@ -43,45 +39,35 @@ if (isset($_GET["idcliente"])) {
     <span class="icon icon-refresh"></span>
     <span class="tab-label">Historicos</span>
   </a>
-  
+ 
   <a class="tab-item" href="contactanos.php">
     <span class="icon icon-info"></span>
     <span class="tab-label">Contactanos</span>
   </a>
 </nav>
-
 <script type="text/javascript">
- 
+ 		
+ 	var idcliente=1;
       $(document).ready(function(){
-        obtener_productos();
-        
+        obtener_historico();
       });
-      //OBTENER PRODUCTOS POR WS
-      function obtener_productos()
-      {
-        $("#areaproductos").html("");
-        //OBTENIENDO INFORMACION DE WS
-        $.get("http://pymesv.com/cliente02w/API/TODOS/")
-        .done(function(jsonws){                   
-          $.each(jsonws ,function(indice,valor){
-            if(indice=="error" && valor=="0")
-            {
-              
-            }
-            else if(indice=="error" && valor=="1")
-            {
-              
-            }
-            else
-            { 
-            var html ="<li class='table-view-cell media'><a href='producto.php?idproducto="+valor.idproductos+"'class='navigate-right'><img class='media-object pull-left' src='"+valor.url+"' width='40px' height='40px' ><div class='media-body'>"+valor.nombre+"<p>"+valor.descripcion+"</p></div></a></li>";
-               $("#areaproductos").append(html);
-              
-            }
-          })
-         
-        });
-      }
+      //CARRITOS HISTORICOS DE COMPRAS
+			function obtener_historico()
+			{
+				
+					$("#cargacarhistorico").html("");				
+					$.get("http://pymesv.com/cliente02w/API/mostrarcarrito/", { idclientes: idcliente})
+					.done(function(jsonws){	
+						var html;
+						$.each(jsonws ,function(indice,valor){
+						 html =html+"<li class='table-view-cell media'><img class='media-object pull-left' src='"+valor.url+"' width='40px' height='40px' ><div class='media-body'>"+valor.nombre+"<h3> cantidad:"+valor.cantidad+"</h3><h3>"+valor.subtot+"</h3><p>"+valor.fecha+"</p></div></li>";
+             })
+						
+						$("#areaproductos").html(html);
+					});			
+								
+			}
+      
 </script>
   </body>
   </html>

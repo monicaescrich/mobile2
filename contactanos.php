@@ -1,10 +1,3 @@
-<?php 
-if (isset($_GET["idcliente"])) {
-  session_start();
-  $_SESSION["idcliente"]=$_GET["idcliente"];
-  $idcliente=$_SESSION["idcliente"];
-}
-?>
 <html>
   <head>
     <meta charset="utf-8">
@@ -26,9 +19,17 @@ if (isset($_GET["idcliente"])) {
   </head>
 
   <body>
-<ul class="table-view" id="areaproductos">
-  
-</ul>
+
+    <div role="main" class="ui-content" style="padding:20px;">
+      <center><h2>Contactanos!</h2></center>
+      <center><h4 style="text-color:gray;">+503 79106598</h4></center>
+           <label for="textinput-hide" >Correo electronico:</label>
+            <input type="text" name="textinput-hide" id="textinput-hide" placeholder="ejemplo@gmail.com" >
+            <label for="textarea">Cuentanos tu duda o sugerencia:</label>
+            <textarea cols="40" rows="8" name="textarea" id="textarea"></textarea>
+            </br>
+            <button class="btn btn-primary btn-block">ENVIAR!</button>
+        </div><!-- /content -->
 
   <nav class="bar bar-tab">
   <a class="tab-item active" href="principal.php">
@@ -50,38 +51,6 @@ if (isset($_GET["idcliente"])) {
   </a>
 </nav>
 
-<script type="text/javascript">
- 
-      $(document).ready(function(){
-        obtener_productos();
-        
-      });
-      //OBTENER PRODUCTOS POR WS
-      function obtener_productos()
-      {
-        $("#areaproductos").html("");
-        //OBTENIENDO INFORMACION DE WS
-        $.get("http://pymesv.com/cliente02w/API/TODOS/")
-        .done(function(jsonws){                   
-          $.each(jsonws ,function(indice,valor){
-            if(indice=="error" && valor=="0")
-            {
-              
-            }
-            else if(indice=="error" && valor=="1")
-            {
-              
-            }
-            else
-            { 
-            var html ="<li class='table-view-cell media'><a href='producto.php?idproducto="+valor.idproductos+"'class='navigate-right'><img class='media-object pull-left' src='"+valor.url+"' width='40px' height='40px' ><div class='media-body'>"+valor.nombre+"<p>"+valor.descripcion+"</p></div></a></li>";
-               $("#areaproductos").append(html);
-              
-            }
-          })
-         
-        });
-      }
-</script>
+
   </body>
   </html>
