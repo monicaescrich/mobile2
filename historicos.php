@@ -60,7 +60,7 @@
 					.done(function(jsonws){	
 						var html;
 						$.each(jsonws ,function(indice,valor){
-						 html =html+"<li class='table-view-cell media'><img class='media-object pull-left' src='"+valor.url+"' width='40px' height='40px' ><div class='media-body'>"+valor.nombre+"<h3> cantidad:"+valor.cantidad+"</h3><h3>"+valor.subtot+"</h3><p>"+valor.fecha+"</p></div></li>";
+						 html =html+"<li class='table-view-cell media'><img class='media-object pull-left' src='"+valor.url+"' width='40px' height='40px' ><div class='media-body'>"+valor.nombre+"<p> cantidad:"+valor.cantidad+"</p><h3> $"+valor.subtot+"</h3><p>"+valor.fecha+"</p></div></li>";
              })
 						
 						$("#areaproductos").html(html);
