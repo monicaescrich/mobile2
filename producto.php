@@ -75,7 +75,7 @@ if(isset($_GET["idproducto"]))
             }
             else
             { 
-            var html ="<form><center><img  style='width:50%; height=50%;'src='"+valor.url+"'><h2>"+valor.nombre+"</h2></center><h3><center>"+valor.precio+"</center></h3><p><center>"+valor.descripcion+"</center></p><input type='text' placeholder='cantidad'><button class='btn btn-positive btn-block' onClick='agregar_carrito(idcliente,'"+valor.idproductos+"','"+valor.nombre+"','"+valor.precio+"','"+valor.url+"');'>Agregar a carrito!</button></form>";
+            var html ="<form><center><img  style='width:50%; height=50%;'src='"+valor.url+"'><h2>"+valor.nombre+"</h2></center><h3><center> $"+valor.precio+"</center></h3><p><center>"+valor.descripcion+"</center></p><input type='text' placeholder='cantidad'><button class='btn btn-positive btn-block' onClick='agregar_carrito(idcliente,'"+valor.idproductos+"','"+valor.nombre+"','"+valor.precio+"','"+valor.url+"');'>Agregar a carrito!</button></form>";
                $("#areaproducto").append(html);
               
             }
