@@ -74,7 +74,7 @@ if (isset($_GET["idcliente"])) {
             }
             else
             { 
-            var html ="<li class='table-view-cell media'><a href='producto.php?idproducto="+valor.idproductos+"'class='navigate-right'><img class='media-object pull-left' src='"+valor.url+"' width='40px' height='40px' ><div class='media-body'>"+valor.nombre+"<p>"+valor.descripcion+"</p></div></a></li>";
+            var html ="<li class='table-view-cell media'><a href='producto.php?idproducto="+valor.idproductos+"'class='navigate-right'><img class='media-object pull-left' src='"+valor.url+"' width='40px' height='40px' ><div class='media-body'>"+valor.nombre+"<p>$"+valor.precio+"</p></div></a></li>";
                $("#areaproductos").append(html);
               
             }
